@@ -13,21 +13,24 @@ namespace API.Services
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.Token._KEY_));
         }
-        public string CreateToken(string user)
+        public string CreateToken(long id, string name, int? roleID)
         {
-            List<Claim> claims =
-            [
-                new Claim(JwtRegisteredClaimNames.NameId, user),
-            ];
+            List<Claim> claims = new()
+            {
+                new Claim(JwtRegisteredClaimNames.NameId, id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, name),
+                new Claim("roleID", roleID?.ToString() ?? "")
+            };
 
             SigningCredentials creds = new(_key, SecurityAlgorithms.HmacSha512Signature);
+
             SecurityTokenDescriptor tokenDescriptor = new()
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddMinutes(1440),
                 SigningCredentials = creds
-
             };
+
             JwtSecurityTokenHandler tokenHandler = new();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);

@@ -4,6 +4,7 @@ public class Purchase
 {
     public long id { get; set; } = -1;
     public int userID { get; set; } = -1;
+    public string? name { get; set; }
     public DateTime orderDate { get; set; } = DateTime.MinValue;
     public decimal total { get; set; } = 0;
 

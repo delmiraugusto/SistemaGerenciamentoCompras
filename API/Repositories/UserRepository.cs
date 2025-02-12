@@ -40,14 +40,28 @@ namespace API.Repositories
             return list;
         }
 
+        public dynamic SelectByEmail(string email)
+        {
+            using DB db = new();
+            db.NewCommand($"SELECT id, email, password, roleID, name FROM {TABLE} WHERE email = @email");
+            db.Parameter("@email", email);
+            using SqliteDataReader reader = db.Execute();
+            if (reader.Read()) return SetAttributes(reader);
+            return new User();
+        }
+
         public dynamic SelectById(long id)
         {
             using DB db = new();
             db.NewCommand($"SELECT id, email, password, roleID, name FROM {TABLE} WHERE id = @id");
             db.Parameter("@id", id);
             using SqliteDataReader reader = db.Execute();
-            if (reader.Read()) return SetAttributes(reader);
-            return new User();
+            if (reader.Read())
+            {
+                return SetAttributes(reader);
+            }
+
+            return null;
         }
 
         public int UpdateById(UserUpdate obj)

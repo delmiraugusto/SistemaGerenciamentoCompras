@@ -13,6 +13,7 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     {
         id = long.Parse(reader["id"].ToString()!),
         userID = int.Parse(reader["userID"].ToString()!),
+        name = reader["name"].ToString()!,
         orderDate = DateTime.Parse(reader["orderDate"].ToString()!),
         total = decimal.Parse(reader["total"].ToString()!)
     };
@@ -30,7 +31,7 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     public List<dynamic> SelectAll()
     {
         using DB db = new();
-        db.NewCommand($"SELECT id, userID, u.name orderDate, total FROM {TABLE} join User u on u.id = userID ");
+        db.NewCommand($"SELECT p.id, p.userID, u.name, p.orderDate, p.total FROM {TABLE} p JOIN User u on u.id = p.userID");
         List<dynamic> list = [];
         using SqliteDataReader reader = db.Execute();
         while (reader.Read())
@@ -43,7 +44,7 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     public dynamic SelectById(long id)
     {
         using DB db = new();
-        db.NewCommand($"SELECT id, userID, u.name, orderDate, total FROM {TABLE} join User u on u.id = userID WHERE id = @id");
+        db.NewCommand($"SELECT p.id, p.userID, u.name, orderDate, total FROM {TABLE} p join User u on u.id = p.userID WHERE p.id = @id");
         db.Parameter("@id", id);
         using SqliteDataReader reader = db.Execute();
         if (reader.Read()) return SetAttributes(reader);

@@ -85,23 +85,38 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Validate(UserUpdate obj)
+        public IActionResult Validate(UserLogin login)
         {
             try
             {
-                UserLoginResponse user = new()
+                var user = _repository.SelectByEmail(login.email);
+
+                if (user == null)
                 {
-                    roleID = obj.roleID,
-                    name = obj.name,
-                    token = _tokenService.CreateToken(obj.name),
+                    return Unauthorized("Invalid email or password.");
+                }
+
+                if (user.password != login.password)
+                {
+                    return Unauthorized("Invalid email or password.");
+                }
+
+                var token = _tokenService.CreateToken(user.id, user.user, user.roleID);
+
+                UserLoginResponse response = new()
+                {
+                    roleID = user.roleID,
+                    name = user.user,
+                    token = token
                 };
-                return Ok(user);
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
         }
+
     }
 }
