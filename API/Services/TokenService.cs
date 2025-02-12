@@ -17,14 +17,16 @@ namespace API.Services
         {
             List<Claim> claims =
             [
-                new Claim(JwtRegisteredClaimNames.NameId, user)
+                new Claim(JwtRegisteredClaimNames.NameId, user),
             ];
+
             SigningCredentials creds = new(_key, SecurityAlgorithms.HmacSha512Signature);
             SecurityTokenDescriptor tokenDescriptor = new()
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddMinutes(1440),
                 SigningCredentials = creds
+
             };
             JwtSecurityTokenHandler tokenHandler = new();
             var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -8,36 +8,79 @@ namespace API.Controllers
 {
     public class UserController : BaseController<UserInsert, UserUpdate>
     {
-        private readonly UserRepository _repository;
+        private readonly UserService _service;
         private readonly TokenService _tokenService;
+        private readonly UserRepository _repository;
 
         public UserController(TokenService tokenService)
         {
             _tokenService = tokenService;
+            _service = new UserService();
             _repository = new UserRepository();
         }
         public override IActionResult Create(UserInsert obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int inserted = _service.Insert(obj);
+                return inserted == 0 ? Problem("object not inserted", obj.ToString()) : Created("sucess", obj);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         public override IActionResult DeleteById(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dynamic i = _service.Delete(id);
+                return i == 0 ? Problem($"Object {id} not updated, {i} rows affected") : Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         public override IActionResult Read()
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<dynamic> i = _repository.SelectAll();
+                return i.Count == 0 ? NotFound() : Ok(i);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         public override IActionResult Read(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (id <= 0) return BadRequest();
+                dynamic i = _repository.SelectById(id);
+                return i == null ? NotFound() : Ok(i);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         public override IActionResult UpdateById(UserUpdate obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dynamic i = _service.Update(obj);
+                return i == 0 ? Problem($"Object {obj.id} not updated, {i} rows affected") : Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [AllowAnonymous]
@@ -48,7 +91,7 @@ namespace API.Controllers
             {
                 UserLoginResponse user = new()
                 {
-                    role = "user",
+                    roleID = obj.roleID,
                     name = obj.name,
                     token = _tokenService.CreateToken(obj.name),
                 };
