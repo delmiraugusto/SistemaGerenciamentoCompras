@@ -53,12 +53,14 @@ namespace API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        public override IActionResult UpdateById(ProductUpdate obj)
+        public override IActionResult UpdateById(long id, ProductUpdate obj)
         {
             try
             {
-                dynamic i = _services.Update(obj);
-                return i == 0 ? Problem($"Object {obj.id} not updated, {i} rows affected") : Ok();
+                dynamic i = _services.Update(obj, id);
+                return i == 0
+                    ? Problem($"Object {id} not updated, {i} rows affected")
+                    : Ok();
             }
             catch (Exception ex)
             {

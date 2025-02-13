@@ -70,18 +70,21 @@ namespace API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        public override IActionResult UpdateById(UserUpdate obj)
+        public override IActionResult UpdateById(long id, UserUpdate obj)
         {
             try
             {
-                dynamic i = _service.Update(obj);
-                return i == 0 ? Problem($"Object {obj.id} not updated, {i} rows affected") : Ok();
+                dynamic result = _service.Update(obj, id);
+                return result == 0
+                    ? Problem($"Object {id} not updated, {result} rows affected")
+                    : Ok();
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
 
         [AllowAnonymous]
         [HttpPost]
@@ -90,6 +93,10 @@ namespace API.Controllers
             try
             {
                 var user = _repository.SelectByEmail(login.email);
+
+                if (login.email == null) { 
+                    return Unauthorized("Invalid email or password.");
+                }
 
                 if (user == null)
                 {

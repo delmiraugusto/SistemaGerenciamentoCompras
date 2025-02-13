@@ -42,11 +42,11 @@ public class ProductRepository : IRepository<ProductInsert, ProductUpdate>
         if (reader.Read()) return SetAttributes(reader);
         return new Product();
     }
-    public int UpdateById(ProductUpdate obj)
+    public int UpdateById(ProductUpdate obj, long id)
     {
         using DB db = new();
         db.NewCommand($"UPDATE {TABLE} SET name=@name, price=@price WHERE id = @id");
-        db.Parameter("@id", obj.id);
+        db.Parameter("@id", id);
         db.Parameter("@name", obj.name);
         db.Parameter("@price", obj.price);
         return db.Execute();

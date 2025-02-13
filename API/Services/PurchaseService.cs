@@ -26,21 +26,20 @@ public class PurchaseService
         return _purchaseRepository.Insert(obj);
     }
 
-    public dynamic Update(PurchaseUpdate obj)
+    public dynamic Update(PurchaseUpdate obj, long id)
     {
         if (obj is null) throw new Exception("Object can't be null");
-        if (obj.id <= 0) throw new Exception("Id purchase invalid");
         if (obj.userID <= 0) throw new Exception("Id user invalid");
         if (obj.total <= 0) throw new Exception("Total must be greater than zero");
         if (obj.orderDate == default) throw new Exception("Invalid order date");
 
-        dynamic purchaseExists = _purchaseRepository.SelectById(obj.id);
+        dynamic purchaseExists = _purchaseRepository.SelectById(id);
         if (purchaseExists == null || purchaseExists.id == -1) throw new KeyNotFoundException("Purchase not found.");
 
         dynamic userExists = _userRepository.SelectById(obj.userID);
         if (userExists == null || userExists.id == -1) throw new KeyNotFoundException("User not found.");
 
-        return _purchaseRepository.UpdateById(obj);
+        return _purchaseRepository.UpdateById(obj, id);
     }
 
     public dynamic Delete(long id)

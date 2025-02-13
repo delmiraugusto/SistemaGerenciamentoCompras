@@ -15,7 +15,8 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public abstract IActionResult Read(long id);
         [HttpPut("{id}")]
-        public abstract IActionResult UpdateById(TUpdate obj);
+        public abstract IActionResult UpdateById(long id, TUpdate obj);
+
         [HttpDelete("{id}")]
         public abstract IActionResult DeleteById(long id);
     }

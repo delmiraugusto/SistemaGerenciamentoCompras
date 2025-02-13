@@ -25,17 +25,18 @@ public class UserService
         return _userRepository.Insert(obj);
     }
 
-    public dynamic Update(UserUpdate obj)
+    public dynamic Update(UserUpdate obj, long id)
     {
         if (obj is null) throw new Exception("Object can't be null");
-        if (obj.id <= 0) throw new Exception("Id invalid");
         if (string.IsNullOrEmpty(obj.email)) throw new Exception("Email can't be null");
         if (string.IsNullOrEmpty(obj.name)) throw new Exception("Name can't be null");
         if (string.IsNullOrEmpty(obj.password) || obj.password.Length < 8) throw new Exception("Password can't be null or less than 8");
-        
-        dynamic exists = _userRepository.SelectById(obj.id);
+
+        obj.password = BCrypt.Net.BCrypt.HashPassword(obj.password);
+
+        dynamic exists = _userRepository.SelectById(id);
         if (exists == null || exists.id == -1) throw new KeyNotFoundException("User not found.");
-        return _userRepository.UpdateById(obj);
+        return _userRepository.UpdateById(obj, id);
     }
 
     public dynamic Delete(long id)

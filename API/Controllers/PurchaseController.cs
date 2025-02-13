@@ -85,12 +85,14 @@ public class PurchaseController : BaseController<PurchaseInsert, PurchaseUpdate>
         }
     }
 
-    public override IActionResult UpdateById(PurchaseUpdate obj)
+    public override IActionResult UpdateById(long id, PurchaseUpdate obj)
     {
         try
         {
-            dynamic i = _service.Update(obj);
-            return i == 0 ? Problem($"Object {obj.id} not updated, {i} rows affected") : Ok();
+            dynamic i = _service.Update(obj, id);
+            return i == 0
+                ? Problem($"Object {id} not updated, {i} rows affected")
+                : Ok();
         }
         catch (Exception ex)
         {

@@ -65,11 +65,11 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
         return list;
     }
 
-    public int UpdateById(PurchaseUpdate obj)
+    public int UpdateById(PurchaseUpdate obj, long id)
     {
         using DB db = new();
         db.NewCommand($"UPDATE {TABLE} SET userID=@userID, orderDate=@orderDate, total=@total WHERE id = @id");
-        db.Parameter("@id", obj.id);
+        db.Parameter("@id", id);
         db.Parameter("@userID", obj.userID);
         db.Parameter("@orderDate", obj.orderDate);
         db.Parameter("@total", obj.total);

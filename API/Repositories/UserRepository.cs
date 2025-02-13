@@ -43,12 +43,24 @@ namespace API.Repositories
         public dynamic SelectByEmail(string email)
         {
             using DB db = new();
-            db.NewCommand($"SELECT id, email, password, roleID, name FROM {TABLE} WHERE email = @email");
-            db.Parameter("@email", email);
-            using SqliteDataReader reader = db.Execute();
-            if (reader.Read()) return SetAttributes(reader);
-            return new User();
+
+            try
+            {
+                db.NewCommand($"SELECT id, email, password, roleID, name FROM {TABLE} WHERE email = @email");
+                db.Parameter("@email", email);
+                using SqliteDataReader reader = db.Execute();
+
+                if (reader.Read())
+                    return SetAttributes(reader);
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Invalid email or password.{ex.Message}");
+            }
         }
+
 
         public dynamic SelectById(long id)
         {
@@ -64,11 +76,11 @@ namespace API.Repositories
             return null;
         }
 
-        public int UpdateById(UserUpdate obj)
+        public int UpdateById(UserUpdate obj, long id)
         {
             using DB db = new();
             db.NewCommand($"UPDATE {TABLE} SET email=@email, password=@password, name=@name WHERE id = @id");
-            db.Parameter("@id", obj.id);
+            db.Parameter("@id", id);
             db.Parameter("@email", obj.email);
             db.Parameter("@password", obj.password);
             db.Parameter("@name", obj.name);
