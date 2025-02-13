@@ -69,6 +69,22 @@ public class PurchaseController : BaseController<PurchaseInsert, PurchaseUpdate>
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("user/{id}")]
+    public IActionResult ReadByUserId(long id)
+    {
+        try
+        {
+            if (id <= 0) return BadRequest();
+            dynamic i = _repository.SelectByUserId(id);
+            return i == null ? NotFound() : Ok(i);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     public override IActionResult UpdateById(PurchaseUpdate obj)
     {
         try

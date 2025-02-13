@@ -20,6 +20,8 @@ public class UserService
         if (string.IsNullOrEmpty(obj.name)) throw new Exception("Name can't be null");
         if (obj.roleID <= 0) throw new Exception("Id role invalid");
 
+        obj.password = BCrypt.Net.BCrypt.HashPassword(obj.password);
+
         return _userRepository.Insert(obj);
     }
 

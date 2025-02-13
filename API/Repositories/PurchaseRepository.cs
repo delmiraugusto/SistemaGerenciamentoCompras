@@ -51,11 +51,11 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
         return new Purchase();
     }
 
-    public List<dynamic> SelectByUserId(long id)
+    public List<dynamic> SelectByUserId(long userID)
     {
         using DB db = new();
-        db.NewCommand($"SELECT id, userID, u.name orderDate, total FROM {TABLE} join User u on u.id = userID WHERE userID = @Id");
-        db.Parameter("@id", id);
+        db.NewCommand($"SELECT p.id, p.userID, u.name, orderDate, total FROM {TABLE} p join User u on u.id = p.userID WHERE p.userID = @userID");
+        db.Parameter("@userID", userID);
         List<dynamic> list = [];
         using SqliteDataReader reader = db.Execute();
         while (reader.Read())

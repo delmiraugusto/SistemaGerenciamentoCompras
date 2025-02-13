@@ -96,7 +96,8 @@ namespace API.Controllers
                     return Unauthorized("Invalid email or password.");
                 }
 
-                if (user.password != login.password)
+
+                if (!BCrypt.Net.BCrypt.Verify(login.password, user.password))
                 {
                     return Unauthorized("Invalid email or password.");
                 }
@@ -117,6 +118,7 @@ namespace API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
     }
 }
