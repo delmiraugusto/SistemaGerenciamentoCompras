@@ -35,7 +35,7 @@ public class PurchaseController : BaseController<PurchaseInsert, PurchaseUpdate>
         try
         {
             dynamic i = _service.Delete(id);
-            return i == 0 ? Problem($"Object {id} not updated, {i} rows affected") : Ok();
+            return i == 0 ? Problem($"Object {id} not updated, {i} rows affected") : NoContent();
         }
         catch (Exception ex)
         {

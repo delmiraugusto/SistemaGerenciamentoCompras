@@ -72,7 +72,7 @@ namespace API.Controllers
             try
             {
                 dynamic i = _services.Delete(id);
-                return i == 0 ? Problem($"Object {id} not updated, {i} rows affected") : Ok();
+                return i == 0 ? Problem($"Object {id} not updated, {i} rows affected") : NoContent();
             }
             catch (Exception ex)
             {
