@@ -17,6 +17,7 @@ public class PurchaseService
     public dynamic Insert(PurchaseInsert obj)
     {
         if (obj.userID <= 0) throw new Exception("Id user invalid");
+        if (obj.productID <= 0) throw new Exception("Id product invalid");
         if (obj.total <= 0) throw new Exception("Total must be greater than zero");
         if (obj.orderDate == default) throw new Exception("Invalid order date");
         if (obj is null) throw new Exception("Object can't be null");
@@ -30,6 +31,7 @@ public class PurchaseService
     {
         if (obj is null) throw new Exception("Object can't be null");
         if (obj.userID <= 0) throw new Exception("Id user invalid");
+        if (obj.productID <= 0) throw new Exception("Id product invalid");
         if (obj.total <= 0) throw new Exception("Total must be greater than zero");
         if (obj.orderDate == default) throw new Exception("Invalid order date");
 

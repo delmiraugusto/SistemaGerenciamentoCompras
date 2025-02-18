@@ -14,7 +14,7 @@ import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.componen
   styleUrls: ['./purchase-table.component.css'],
 })
 export class PurchaseTableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'userID', 'name', 'orderDate', 'total', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['id', 'userID', 'productID', 'orderDate', 'total', 'Edit', 'Delete'];
   purchaseList: MatTableDataSource<Purchase> = new MatTableDataSource<Purchase>();
   pageSizes: number[] = [25, 50, 100];
   length: number = 0;

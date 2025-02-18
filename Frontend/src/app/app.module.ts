@@ -31,6 +31,7 @@ import { GenericDialog } from './shared/dialogs/generic-dialog/generic-dialog';
 import { ProductComponent } from './shared/dialogs/product/product.component';
 import { PurchaseComponent } from './shared/dialogs/purchase/purchase.component';
 import { PurchaseTableComponent } from './shared/components/purchase-table/purchase-table.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { PurchaseTableComponent } from './shared/components/purchase-table/purch
     MatSortModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
   providers: [
     HTTPService,

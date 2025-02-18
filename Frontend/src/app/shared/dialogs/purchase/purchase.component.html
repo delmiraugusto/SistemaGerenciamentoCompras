@@ -8,13 +8,21 @@
 
   <div style="padding: 10px;">
     <mat-form-field style="width: 100%;">
-      <mat-label>User ID</mat-label>
-      <input [(ngModel)]="purchase.userID" matInput placeholder="User ID" #input>
+      <mat-label>User</mat-label>
+      <mat-select [(ngModel)]="purchase.userID">
+        <mat-option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field style="width: 100%;">
-      <mat-label>Product Name</mat-label>
-      <input [(ngModel)]="purchase.name" matInput placeholder="Product Name" #input>
+      <mat-label>Product</mat-label>
+      <mat-select [(ngModel)]="purchase.productID">
+        <mat-option *ngFor="let product of products" [value]="product.id">
+          {{ product.name }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field style="width: 100%;">

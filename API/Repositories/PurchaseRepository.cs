@@ -13,7 +13,9 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     {
         id = long.Parse(reader["id"].ToString()!),
         userID = int.Parse(reader["userID"].ToString()!),
-        name = reader["name"].ToString()!,
+        productID = int.Parse(reader["productID"].ToString()!),
+        productName = reader["productName"].ToString()!,
+        userName = reader["userName"].ToString()!,
         orderDate = DateTime.Parse(reader["orderDate"].ToString()!),
         total = decimal.Parse(reader["total"].ToString()!)
     };
@@ -21,7 +23,8 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     public int Insert(PurchaseInsert obj)
     {
         using DB db = new();
-        db.NewCommand($"INSERT INTO {TABLE} (userID, orderDate, total) VALUES (@userID, @orderDate, @total)");
+        db.NewCommand($"INSERT INTO {TABLE} (userID, productID, orderDate, total) VALUES (@userID, @productID, @orderDate, @total)");
+        db.Parameter("@userID", obj.userID);
         db.Parameter("@userID", obj.userID);
         db.Parameter("@orderDate", obj.orderDate);
         db.Parameter("@total", obj.total);
@@ -31,7 +34,10 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     public List<dynamic> SelectAll()
     {
         using DB db = new();
-        db.NewCommand($"SELECT p.id, p.userID, u.name, p.orderDate, p.total FROM {TABLE} p JOIN User u on u.id = p.userID");
+        db.NewCommand($"SELECT p.id, p.userID, p.productID, prod.name AS productName, u.name AS userName, p.orderDate, p.total " +
+              $"FROM {TABLE} p " +
+              $"JOIN User u ON u.id = p.userID " +
+              $"JOIN Product prod ON prod.id = p.productID");
         List<dynamic> list = [];
         using SqliteDataReader reader = db.Execute();
         while (reader.Read())
@@ -44,7 +50,10 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     public dynamic SelectById(long id)
     {
         using DB db = new();
-        db.NewCommand($"SELECT p.id, p.userID, u.name, orderDate, total FROM {TABLE} p join User u on u.id = p.userID WHERE p.id = @id");
+        db.NewCommand($"SELECT p.id, p.userID, p.productID, prod.name AS productName, u.name AS userName, p.orderDate, p.total " +
+              $"FROM {TABLE} p " +
+              $"JOIN User u ON u.id = p.userID " +
+              $"JOIN Product prod ON prod.id = p.productID WHERE p.id = @id");
         db.Parameter("@id", id);
         using SqliteDataReader reader = db.Execute();
         if (reader.Read()) return SetAttributes(reader);
@@ -54,7 +63,10 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     public List<dynamic> SelectByUserId(long userID)
     {
         using DB db = new();
-        db.NewCommand($"SELECT p.id, p.userID, u.name, orderDate, total FROM {TABLE} p join User u on u.id = p.userID WHERE p.userID = @userID");
+        db.NewCommand($"SELECT p.id, p.userID, p.productID, prod.name AS productName, u.name AS userName, p.orderDate, p.total " +
+              $"FROM {TABLE} p " +
+              $"JOIN User u ON u.id = p.userID " +
+              $"JOIN Product prod ON prod.id = p.productID WHERE p.userID = @userID");
         db.Parameter("@userID", userID);
         List<dynamic> list = [];
         using SqliteDataReader reader = db.Execute();
@@ -68,9 +80,10 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     public int UpdateById(PurchaseUpdate obj, long id)
     {
         using DB db = new();
-        db.NewCommand($"UPDATE {TABLE} SET userID=@userID, orderDate=@orderDate, total=@total WHERE id = @id");
+        db.NewCommand($"UPDATE {TABLE} SET userID=@userID, productID=@productID, orderDate=@orderDate, total=@total WHERE id = @id");
         db.Parameter("@id", id);
         db.Parameter("@userID", obj.userID);
+        db.Parameter("@productID", obj.productID);
         db.Parameter("@orderDate", obj.orderDate);
         db.Parameter("@total", obj.total);
         return db.Execute();

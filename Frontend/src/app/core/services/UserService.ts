@@ -19,6 +19,18 @@ export class UserService {
   getCurrentAccessLevel = () => sessionStorage.getItem('roles');
   getCurrentToken = () => sessionStorage.getItem('token');
 
+  GetList = () =>
+    this.http.get<User[]>(`${Constants.USER}/Read`).pipe(
+      map((products: User[]) => products),
+      catchError(error => { throw error; })
+    );
+
+  GetById = (id: number) =>
+    this.http.get<User>(`${Constants.USER}/Read/${id}`).pipe(
+      map((product: User) => product),
+      catchError(error => { throw error; })
+    );
+
   Login = (user: UserLogin) =>
     this.http.post<UserLoginResponse>(`${this.BASE_URL}/Validate`, user).pipe(
       map((response: UserLoginResponse) => {
