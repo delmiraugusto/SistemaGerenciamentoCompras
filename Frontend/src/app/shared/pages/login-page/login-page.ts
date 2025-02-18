@@ -22,10 +22,11 @@ export class LoginPage {
   ngOnInit(): void { }
 
   CheckBlank() {
-    if (!this.user.user) {
+    if (!this.user.email) {
       this.snackBar.open("User Cannot Be Blank", true);
       return true;
     }
+
     if (!this.user.password) {
       this.snackBar.open("Password Cannot Be Blank", true);
       return true;
@@ -37,10 +38,13 @@ export class LoginPage {
     if (!this.CheckBlank()) {
       this.spiner.show();
       this.userService.Login(this.user).subscribe({
-        next: () => this.router.navigate(['/button']),
+        next: () => {
+          this.snackBar.open("Login bem-sucedido!", false);
+          this.router.navigate(['/home']);
+        },
         error: error => {
           this.spiner.hide();
-          this.snackBar.open(error.statusText, true);
+          this.snackBar.open("E-mail e/ou senha inválido(s)", true);
         },
         complete: () => this.spiner.hide()
       });

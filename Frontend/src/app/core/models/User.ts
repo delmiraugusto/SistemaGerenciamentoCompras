@@ -1,27 +1,31 @@
 export class User {
   id: number = -1;
-  email: string = "";
-  name: string = "";
+  user: string = "";
+  password: string = "";
+  roleID?: number;
 }
 
 export class UserLogin {
-  user: string = "";
+  email: string = "";
   password: string = "";
 }
 
 export class UserLoginResponse {
-  role: string = "";
-  token: string = "";
   name: string = "";
+  token: string = "";
+  roleID?: number;
 }
 
 export class UserInsert {
   email: string = "";
   name: string = "";
+  password: string = "";
+  roleID?: number;
 }
 
 export class UserUpdate {
-  id: number = -1;
   email: string = "";
   name: string = "";
+  password: string = "";
+  roleID?: number;
 }

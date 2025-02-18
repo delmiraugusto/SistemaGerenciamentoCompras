@@ -18,6 +18,8 @@ namespace API.Controllers
             _service = new UserService();
             _repository = new UserRepository();
         }
+
+        [AllowAnonymous]
         public override IActionResult Create(UserInsert obj)
         {
             try

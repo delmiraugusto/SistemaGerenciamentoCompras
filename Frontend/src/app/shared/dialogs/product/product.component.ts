@@ -22,18 +22,18 @@ export class ProductComponent implements OnInit {
   }
 
   Insert = () => {
-    if(this.title.toLowerCase().includes("insert")){
-      const productInsert : ProductInsert = new ProductInsert ();
+    if (this.title.toLowerCase().includes("insert")) {
+      const productInsert: ProductInsert = new ProductInsert();
       productInsert.name = this.product.name;
       productInsert.price = this.product.price;
       this.productService.Insert(productInsert).subscribe();
     }
-    else{
-      const itemUpdate : ProductUpdate = new ProductUpdate ();
+    else {
+      const itemUpdate: ProductUpdate = new ProductUpdate();
       itemUpdate.id = this.product.id;
       itemUpdate.name = this.product.name;
       itemUpdate.price = this.product.price;
-      this.productService.UpdateById(itemUpdate).subscribe();
+      this.productService.UpdateById(itemUpdate.id, itemUpdate).subscribe();
     }
   }
 

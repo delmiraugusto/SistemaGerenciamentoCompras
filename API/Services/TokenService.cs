@@ -18,7 +18,7 @@ namespace API.Services
             List<Claim> claims = new()
             {
                 new Claim(JwtRegisteredClaimNames.NameId, id.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, name),
+                new Claim(JwtRegisteredClaimNames.Name, name),
                 new Claim("roleID", roleID?.ToString() ?? "")
             };
 
