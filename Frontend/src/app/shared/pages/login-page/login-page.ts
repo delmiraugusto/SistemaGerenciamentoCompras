@@ -4,6 +4,8 @@ import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.componen
 import { SpinnerService } from 'src/app/shared/components/spinner/spinner.service';
 import { UserLogin } from 'src/app/core/models/User';
 import { UserService } from 'src/app/core/services/UserService';
+import { jwtDecode } from 'jwt-decode';
+
 
 @Component({
   selector: 'login-page',
@@ -40,7 +42,20 @@ export class LoginPage {
       this.userService.Login(this.user).subscribe({
         next: () => {
           this.snackBar.open("Login bem-sucedido!", false);
-          this.router.navigate(['/home']);
+
+          const token = sessionStorage.getItem('token');
+          if (token) {
+            const decodedToken: any = jwtDecode(token);
+            const roleID = decodedToken?.roleID;
+
+            if (roleID === '1') {
+              this.router.navigate(['/listProduct']);
+            } else if (roleID === '2') {
+              this.router.navigate(['/homeCliente']);
+            }
+          } else {
+            this.router.navigate(['']);
+          }
         },
         error: error => {
           this.spiner.hide();

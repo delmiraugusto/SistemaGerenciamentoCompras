@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Constants } from './Constants';
 import { User, UserLogin, UserLoginResponse, UserInsert, UserUpdate } from '../models/User';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +20,15 @@ export class UserService {
   getCurrentToken = () => sessionStorage.getItem('token');
 
   Login = (user: UserLogin) =>
-    this.http.post<UserLoginResponse>(`${this.BASE_URL}User/Validate`, user).pipe(
+    this.http.post<UserLoginResponse>(`${this.BASE_URL}/Validate`, user).pipe(
       map((response: UserLoginResponse) => {
         sessionStorage.setItem('token', response.token);
+
+        const decodedToken: any = jwtDecode(response.token);
+        const roleID = decodedToken?.roleID;
+
+        sessionStorage.setItem('roles', roleID);
+
         this.currentUserSource.next(response);
         return response;
       }),

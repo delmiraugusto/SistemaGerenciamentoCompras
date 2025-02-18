@@ -11,8 +11,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { LoginPage } from './shared/pages/login-page/login-page';
+import { PurchasePage } from './shared/pages/purchase-page/purchase-page';
 import { ButtonPage } from './shared/pages/button-page/button-page';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MainTableComponent } from './shared/components/main-table/main-table.component';
@@ -26,18 +29,23 @@ import { BarPage } from './shared/pages/bar-page/bar-page';
 import { MatDialogModule } from '@angular/material/dialog';
 import { GenericDialog } from './shared/dialogs/generic-dialog/generic-dialog';
 import { ProductComponent } from './shared/dialogs/product/product.component';
+import { PurchaseComponent } from './shared/dialogs/purchase/purchase.component';
+import { PurchaseTableComponent } from './shared/components/purchase-table/purchase-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LoginPage,
+    PurchasePage,
     ButtonPage,
     MainTableComponent,
     FooPage,
     BarPage,
     ProductComponent,
+    PurchaseComponent,
     GenericDialog,
+    PurchaseTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +62,9 @@ import { ProductComponent } from './shared/dialogs/product/product.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     HTTPService,

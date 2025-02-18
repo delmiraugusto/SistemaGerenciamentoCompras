@@ -13,15 +13,22 @@ export class AuthGuard implements CanActivate {
     constructor(private userService: UserService, private router: Router, private snackBar: SnackBar) { }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        const allowedRoles = next.data['roles'] as Array<string>;
-        const userRoles = this.userService.getCurrentAccessLevel();
+        const roleID = this.userService.getCurrentAccessLevel();
 
-        const hasAccess = allowedRoles.some(role => userRoles?.toLowerCase().includes(role.toLowerCase()));
-        if (!hasAccess) {
-            this.snackBar.open("Unauthorized", true);
-            this.router.navigate(['']);
+        if (!roleID) {
+            this.snackBar.open("You must be logged in to access this page", true);
+            this.router.navigate(['/']);
+            return false;
         }
 
-        return hasAccess;
+        const allowedRoles = next.data['roleID'] as Array<string>;
+
+        if (allowedRoles.includes(roleID)) {
+            return true;
+        } else {
+            this.snackBar.open("Unauthorized", true);
+            this.router.navigate(['/']);
+            return false;
+        }
     }
 }

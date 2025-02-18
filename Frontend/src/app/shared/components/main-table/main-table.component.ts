@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductComponent } from 'src/app/shared/dialogs/product/product.component';
+import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-main-table',
@@ -21,7 +22,7 @@ export class MainTableComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private productService: ProductService, private dialog: MatDialog) { }
+  constructor(private productService: ProductService, private dialog: MatDialog, private snackBar: SnackBar) { }
   ngOnInit(): void {
     this.refresh();
   }
@@ -57,7 +58,18 @@ export class MainTableComponent implements OnInit {
 
   edit = (obj: Product) => this.openDialog("Edit Product", obj);
 
-  remove = (id: string) => console.log("remove" + id);
+  remove = (id: number) => {
+    this.productService.RemoveById(id).subscribe({
+      next: () => {
+        this.snackBar.open("Produto removido com sucesso!", false);
+
+        this.refresh();
+      },
+      error: (err) => {
+        this.snackBar.open("Erro ao remover o produto", true);
+      }
+    });
+  };
 
   openDialog(title: string, object?: Product) {
     this.dialog.open(ProductComponent, {
