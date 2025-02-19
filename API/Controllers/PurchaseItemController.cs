@@ -2,34 +2,33 @@
 using API.Repositories;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
-using static API.Models.Purchase;
+using static API.Models.PurchaseItem;
 
 namespace API.Controllers;
 
-public class PurchaseController : BaseController<PurchaseInsert, PurchaseUpdate>
+public class PurchaseItemController : BaseController<PurchaseItemInsert, PurchaseItemUpdate>
 {
-    private readonly PurchaseService _service;
-    private readonly PurchaseRepository _repository;
+    private readonly PurchaseItemService _service;
+    private readonly PurchaseItemRepository _repository;
 
-    public PurchaseController() 
+    public PurchaseItemController() 
     {
-        _service = new PurchaseService();
-        _repository = new PurchaseRepository();
+        _service = new PurchaseItemService();
+        _repository = new PurchaseItemRepository();
     }
 
-    public override IActionResult Create(PurchaseInsert obj)
+    public override IActionResult Create(PurchaseItemInsert obj)
     {
         try
         {
             int inserted = _service.Insert(obj);
-            return inserted == 0 ? Problem("Object not inserted") : Created("Sucess", obj);
+            return inserted == 0 ? Problem("Object not inserted", obj.ToString()) : Created("Sucess", obj);
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
     }
-
 
     public override IActionResult DeleteById(long id)
     {
@@ -71,22 +70,7 @@ public class PurchaseController : BaseController<PurchaseInsert, PurchaseUpdate>
         }
     }
 
-    [HttpGet("user/{id}")]
-    public IActionResult ReadByUserId(long id)
-    {
-        try
-        {
-            if (id <= 0) return BadRequest();
-            dynamic i = _repository.SelectByUserId(id);
-            return i == null ? NotFound() : Ok(i);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
-
-    public override IActionResult UpdateById(long id, PurchaseUpdate obj)
+    public override IActionResult UpdateById(long id, PurchaseItemUpdate obj)
     {
         try
         {

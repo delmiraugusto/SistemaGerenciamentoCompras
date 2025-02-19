@@ -25,23 +25,43 @@ public class ProductRepository : IRepository<ProductInsert, ProductUpdate>
     {
         using DB db = new();
         db.NewCommand($"SELECT id, name, price FROM {TABLE}");
+
         List<dynamic> list = [];
-        using SqliteDataReader reader = db.Execute();
+        using SqliteDataReader reader = db.ExecuteReader();
+
         while (reader.Read())
         {
-            list.Add(SetAttributes(reader));
+            list.Add(new
+            {
+                id = reader["id"],
+                name = reader["name"],
+                price = reader["price"]
+            });
         }
+
         return list;
     }
+
     public dynamic SelectById(long id)
     {
         using DB db = new();
         db.NewCommand($"SELECT id, name, price FROM {TABLE} WHERE id = @id");
         db.Parameter("@id", id);
-        using SqliteDataReader reader = db.Execute();
-        if (reader.Read()) return SetAttributes(reader);
+
+        using SqliteDataReader reader = db.ExecuteReader();
+        if (reader.Read())
+        {
+            return new
+            {
+                id = reader["id"],
+                name = reader["name"],
+                price = reader["price"]
+            };
+        }
+
         return new Product();
     }
+
     public int UpdateById(ProductUpdate obj, long id)
     {
         using DB db = new();

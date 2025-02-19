@@ -5,7 +5,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    [Authorize]
+    // [Authorize]
     public abstract class BaseController<TCreate, TUpdate> : ControllerBase
     {
         [HttpPost]

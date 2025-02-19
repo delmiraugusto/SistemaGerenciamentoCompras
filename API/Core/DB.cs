@@ -46,6 +46,26 @@ public class DB : IDisposable
         }
         return command.ExecuteNonQuery();
     }
+
+    public SqliteDataReader ExecuteReader()
+    {
+        if (cnn?.State == ConnectionState.Closed)
+        {
+            Connect();
+        }
+
+        return command.ExecuteReader();
+    }
+
+    public dynamic ExecuteScalar()
+    {
+        if (cnn?.State == ConnectionState.Closed)
+        {
+            Connect();
+        }
+        return command.ExecuteScalar();
+    }
+
     public void Dispose()
     {
         Disconnect();
@@ -54,10 +74,42 @@ public class DB : IDisposable
     public void CreateDatabase()
     {
         NewCommand(@"
-        CREATE TABLE IF NOT EXISTS Role ( id INTEGER PRIMARY KEY AUTOINCREMENT, role TEXT NOT NULL);
-        CREATE TABLE IF NOT EXISTS User ( id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL, password TEXT NOT NULL, name TEXT NOT NULL, roleID INTEGER, FOREIGN KEY (roleID) REFERENCES Role(id));
-        CREATE TABLE IF NOT EXISTS Product ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, price DECIMAL(10, 2) NOT NULL );
-        CREATE TABLE IF NOT EXISTS Purchase ( id INTEGER PRIMARY KEY AUTOINCREMENT, userID INTEGER, productID INTEGER, orderDate DATETIME, total DECIMAL(10, 2) NOT NULL, FOREIGN KEY (userID) REFERENCES User(id), FOREIGN KEY (productID) REFERENCES Product(id));");
+        CREATE TABLE IF NOT EXISTS Role (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            role TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS User (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            email TEXT NOT NULL, 
+            password TEXT NOT NULL, 
+            name TEXT NOT NULL, 
+            roleID INTEGER, 
+            FOREIGN KEY (roleID) REFERENCES Role(id)
+        );
+
+        CREATE TABLE IF NOT EXISTS Product (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            name TEXT NOT NULL, 
+            price DECIMAL(10, 2) NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS Purchase (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            userID INTEGER, 
+            orderDate DATETIME,
+            total DECIMAL(10, 2) NOT NULL DEFAULT 0, 
+            FOREIGN KEY (userID) REFERENCES User(id)
+        );
+
+        CREATE TABLE IF NOT EXISTS PurchaseItem (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            purchaseID INTEGER NOT NULL, 
+            productID INTEGER NOT NULL, 
+            quantity INTEGER NOT NULL, 
+            FOREIGN KEY (purchaseID) REFERENCES Purchase(id) ON DELETE CASCADE, 
+            FOREIGN KEY (productID) REFERENCES Product(id) ON DELETE CASCADE
+        );");
         Connect();
         Execute();
         Dispose();
