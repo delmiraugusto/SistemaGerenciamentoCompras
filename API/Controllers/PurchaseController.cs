@@ -21,15 +21,18 @@ public class PurchaseController : BaseController<PurchaseInsert, PurchaseUpdate>
     {
         try
         {
-            int inserted = _service.Insert(obj);
-            return inserted == 0 ? Problem("Object not inserted") : Created("Sucess", obj);
+            int purchaseID = _service.Insert(obj);
+
+            if (purchaseID == 0)
+                return Problem("Object not inserted");
+
+            return Created("Success", new { purchaseID });
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
     }
-
 
     public override IActionResult DeleteById(long id)
     {

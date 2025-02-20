@@ -25,9 +25,12 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
     public int Insert(PurchaseInsert obj)
     {
         using DB db = new();
-        db.NewCommand($"INSERT INTO Purchase (userID, orderDate, total) VALUES (@userID, @orderDate, 0)");
+
+        DateTime orderDate = DateTime.Now;
+
+        db.NewCommand("INSERT INTO Purchase (userID, orderDate, total) VALUES (@userID, @orderDate, 0)");
         db.Parameter("@userID", obj.userID);
-        db.Parameter("@orderDate", obj.orderDate);
+        db.Parameter("@orderDate", orderDate);
         db.Execute();
 
         db.NewCommand("SELECT last_insert_rowid()");
@@ -37,7 +40,7 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
 
         foreach (var item in obj.items)
         {
-            db.NewCommand($"INSERT INTO PurchaseItem (purchaseID, productID, quantity) VALUES (@purchaseID, @productID, @quantity)");
+            db.NewCommand("INSERT INTO PurchaseItem (purchaseID, productID, quantity) VALUES (@purchaseID, @productID, @quantity)");
             db.Parameter("@purchaseID", purchaseID);
             db.Parameter("@productID", item.productID);
             db.Parameter("@quantity", item.quantity);
@@ -50,13 +53,15 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
             total += price * item.quantity;
         }
 
-        db.NewCommand($"UPDATE Purchase SET total = @total WHERE id = @purchaseID");
+        db.NewCommand("UPDATE Purchase SET total = @total WHERE id = @purchaseID");
         db.Parameter("@total", total);
         db.Parameter("@purchaseID", purchaseID);
         db.Execute();
 
         return (int)purchaseID;
     }
+
+
 
     public List<dynamic> SelectAll()
     {
