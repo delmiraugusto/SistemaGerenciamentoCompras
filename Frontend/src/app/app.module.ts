@@ -32,6 +32,10 @@ import { ProductComponent } from './shared/dialogs/product/product.component';
 import { PurchaseComponent } from './shared/dialogs/purchase/purchase.component';
 import { PurchaseTableComponent } from './shared/components/purchase-table/purchase-table.component';
 import { MatSelectModule } from '@angular/material/select';
+import { PurchaseDetailsComponent } from './shared/components/purchase-details/purchase-details.component';
+import { UserComponent } from './shared/dialogs/user/user-component';
+import { UserTableComponent } from './shared/components/user-table/user-table.component';
+import { UserPage } from './shared/pages/user-page/user-page';
 
 @NgModule({
   declarations: [
@@ -47,6 +51,10 @@ import { MatSelectModule } from '@angular/material/select';
     PurchaseComponent,
     GenericDialog,
     PurchaseTableComponent,
+    PurchaseDetailsComponent,
+    UserComponent,
+    UserTableComponent,
+    UserPage
   ],
   imports: [
     BrowserModule,

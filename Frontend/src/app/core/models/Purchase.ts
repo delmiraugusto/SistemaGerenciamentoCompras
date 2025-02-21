@@ -6,14 +6,14 @@ export class Purchase {
     userName?: string;
     orderDate: Date = new Date();
     total: number = 0;
+    products: { name: string; quantity: number }[] = [];
 }
 
 export class PurchaseInsert {
     userID: number = -1;
-    productId: number = -1;
-    orderDate: Date = new Date();
-    total: number = 0;
+    items: { productID: number; quantity: number }[] = [];
 }
+
 
 export class PurchaseUpdate {
     id: number = -1;

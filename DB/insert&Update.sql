@@ -1,17 +1,19 @@
 INSERT INTO Role (role) VALUES ('Administrador');
 INSERT INTO Role (role) VALUES ('Cliente');
 
+-- Todas as senhas são: 12345678. 
+--Porém já estou fazendo o insert com elas criptografadas, para poder funcionar no validade.
 INSERT INTO User (email, password, name, roleID) VALUES 
-('user1@example.com', '12345678', 'Cliente User 1', 1),
-('user2@example.com', '12345678', 'Cliente User 2', 2),
-('user3@example.com', '12345678', 'Cliente User 3', 2),
-('user4@example.com', '12345678', 'Cliente User 4', 2),
-('user5@example.com', '12345678', 'Cliente User 5', 2),
-('user6@example.com', '12345678', 'Cliente User 6', 2),
-('user7@example.com', '12345678', 'Cliente User 7', 2),
-('user8@example.com', '12345678', 'Cliente User 8', 2),
-('user9@example.com', '12345678', 'Cliente User 9', 2),
-('user10@example.com', '12345678', 'Cliente User 10', 2);
+('user1@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 1', 1),
+('user2@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 2', 2),
+('user3@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 3', 2),
+('user4@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 4', 2),
+('user5@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 5', 2),
+('user6@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 6', 2),
+('user7@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 7', 2),
+('user8@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 8', 2),
+('user9@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 9', 2),
+('user10@example.com', '$2b$10$lUvu4q0IZ8xtVP2JdClIQeBVIyYTZHRJsw9/TjIZuT6POjkh5v6gW', 'Cliente User 10', 2);
 
 INSERT INTO Product (name, price) VALUES 
 ('Headset Gamer', 350.00),

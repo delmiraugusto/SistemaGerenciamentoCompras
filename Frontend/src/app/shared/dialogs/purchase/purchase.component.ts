@@ -15,7 +15,7 @@ import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.componen
 })
 export class PurchaseComponent implements OnInit {
     title: string = "";
-    purchase: Purchase = new Purchase();
+    purchase: PurchaseInsert = new PurchaseInsert();
     users: User[] = [];
     products: Product[] = [];
 
@@ -27,7 +27,7 @@ export class PurchaseComponent implements OnInit {
         private snackBar: SnackBar
     ) {
         this.title = this.data.title;
-        this.purchase = this.data.object ?? new Purchase();
+        this.purchase = this.data.object ?? new PurchaseInsert();
     }
 
     ngOnInit(): void {
@@ -47,38 +47,24 @@ export class PurchaseComponent implements OnInit {
         });
     }
 
-    Insert = () => {
-        if (this.title.toLowerCase().includes("insert")) {
-            const purchaseInsert: PurchaseInsert = new PurchaseInsert();
-            purchaseInsert.userID = this.purchase.userID;
-            purchaseInsert.productId = this.purchase.productID;
-            purchaseInsert.orderDate = this.purchase.orderDate;
-            purchaseInsert.total = this.purchase.total;
+    addItem() {
+        this.purchase.items.push({ productID: -1, quantity: 1 });
+    }
 
-            this.purchaseService.Insert(purchaseInsert).subscribe({
-                next: response => {
+    removeItem(index: number) {
+        this.purchase.items.splice(index, 1);
+    }
+
+    Insert() {
+        if (this.title.toLowerCase().includes("insert")) {
+            this.purchaseService.Insert(this.purchase).subscribe({
+                next: () => {
                     this.snackBar.open("Compra inserida com sucesso!", false);
                 },
-                error: err => {
+                error: () => {
                     this.snackBar.open("Erro ao inserir a compra", true);
                 }
             });
-        } else {
-            const itemUpdate: PurchaseUpdate = new PurchaseUpdate();
-            itemUpdate.id = this.purchase.id;
-            itemUpdate.userID = this.purchase.userID;
-            itemUpdate.productID = this.purchase.productID;
-            itemUpdate.orderDate = this.purchase.orderDate;
-            itemUpdate.total = this.purchase.total;
-
-            this.purchaseService.UpdateById(itemUpdate.id, itemUpdate).subscribe({
-                next: response => {
-                    this.snackBar.open("Produto atualizado com sucesso!", false);
-                },
-                error: err => {
-                    this.snackBar.open("Erro ao atualizar a compra", true);
-                }
-            });
         }
-    };
+    }
 }

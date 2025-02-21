@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { PurchaseComponent } from 'src/app/shared/dialogs/purchase/purchase.component';
 import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { PurchaseDetailsComponent } from '../purchase-details/purchase-details.component';
 
 @Component({
   selector: 'app-purchase-table',
@@ -14,7 +15,7 @@ import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.componen
   styleUrls: ['./purchase-table.component.css'],
 })
 export class PurchaseTableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'userID', 'productID', 'orderDate', 'total', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['id', 'UserName', 'productID', 'orderDate', 'total', 'Edit', 'Delete'];
   purchaseList: MatTableDataSource<Purchase> = new MatTableDataSource<Purchase>();
   pageSizes: number[] = [25, 50, 100];
   length: number = 0;
@@ -70,6 +71,14 @@ export class PurchaseTableComponent implements OnInit {
       }
     });
   };
+
+  openPurchaseDetails(purchase: Purchase) {
+    this.dialog.open(PurchaseDetailsComponent, {
+      width: '500px',
+      data: { products: purchase.products }
+    });
+  }
+
 
   openDialog(title: string, object?: Purchase) {
     this.dialog.open(PurchaseComponent, {

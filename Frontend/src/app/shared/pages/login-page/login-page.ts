@@ -41,7 +41,7 @@ export class LoginPage {
       this.spiner.show();
       this.userService.Login(this.user).subscribe({
         next: () => {
-          this.snackBar.open("Login bem-sucedido!", false);
+          this.snackBar.open("Successful login!", false);
 
           const token = sessionStorage.getItem('token');
           if (token) {
@@ -59,7 +59,7 @@ export class LoginPage {
         },
         error: error => {
           this.spiner.hide();
-          this.snackBar.open("E-mail e/ou senha inválido(s)", true);
+          this.snackBar.open("Invalid email and/or password", true);
         },
         complete: () => this.spiner.hide()
       });

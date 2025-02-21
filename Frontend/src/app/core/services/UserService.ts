@@ -51,4 +51,20 @@ export class UserService {
     sessionStorage.clear();
     this.currentUserSource.next(null);
   };
+
+  Insert = (obj: UserInsert) =>
+    this.http.post(`${Constants.USER}/Create`, obj).pipe(
+      catchError(error => { throw error; })
+    );
+
+  UpdateById = (id: number, obj: UserUpdate) =>
+    this.http.put(`${Constants.USER}/UpdateById/${id}`, obj).pipe(
+      catchError(error => { throw error; })
+    );
+
+  RemoveById = (id: number) =>
+    this.http.delete(`${Constants.USER}/DeleteById/${id}`).pipe(
+      catchError(error => { throw error; })
+    );
+
 }

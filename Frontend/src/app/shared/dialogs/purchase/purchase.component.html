@@ -1,6 +1,6 @@
 <div class="container">
   <div class="container-header">
-    <h1>{{title}}</h1>
+    <h1>{{ title }}</h1>
     <button mat-icon-button mat-dialog-close style="width: 50px; height: 50px;">
       <mat-icon>close</mat-icon>
     </button>
@@ -16,24 +16,31 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field style="width: 100%;">
-      <mat-label>Product</mat-label>
-      <mat-select [(ngModel)]="purchase.productID">
-        <mat-option *ngFor="let product of products" [value]="product.id">
-          {{ product.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div *ngFor="let item of purchase.items; let i = index">
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <mat-form-field style="flex: 2;">
+          <mat-label>Product</mat-label>
+          <mat-select [(ngModel)]="item.productID">
+            <mat-option *ngFor="let product of products" [value]="product.id">
+              {{ product.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field style="width: 100%;">
-      <mat-label>Order Date</mat-label>
-      <input [(ngModel)]="purchase.orderDate" matInput placeholder="Order Date" type="date" #input>
-    </mat-form-field>
+        <mat-form-field style="flex: 1;">
+          <mat-label>Quantity</mat-label>
+          <input matInput type="number" min="1" [(ngModel)]="item.quantity">
+        </mat-form-field>
 
-    <mat-form-field style="width: 100%;">
-      <mat-label>Total</mat-label>
-      <input [(ngModel)]="purchase.total" matInput placeholder="Total" type="number" #input>
-    </mat-form-field>
+        <button mat-icon-button color="warn" (click)="removeItem(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <button mat-button color="primary" (click)="addItem()" style="margin-top: 10px;">
+      <mat-icon>add</mat-icon> Add Product
+    </button>
   </div>
 
   <div mat-dialog-actions>

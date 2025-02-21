@@ -1,6 +1,6 @@
 export class User {
   id: number = -1;
-  user: string = "";
+  email: string = "";
   name: string = "";
   password: string = "";
   roleID?: number;
@@ -25,6 +25,7 @@ export class UserInsert {
 }
 
 export class UserUpdate {
+  id: number = -1;
   email: string = "";
   name: string = "";
   password: string = "";

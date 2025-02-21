@@ -29,10 +29,10 @@ export class ProductComponent implements OnInit {
       productInsert.price = this.product.price;
       this.productService.Insert(productInsert).subscribe({
         next: response => {
-          this.snackBar.open("Compra inserida com sucesso!", false);
+          this.snackBar.open("Purchase entered successfully!", false);
         },
         error: err => {
-          this.snackBar.open("Erro ao inserir a compra", true);
+          this.snackBar.open("Error when entering purchase", true);
         }
       });
     }
@@ -43,10 +43,10 @@ export class ProductComponent implements OnInit {
       itemUpdate.price = this.product.price;
       this.productService.UpdateById(itemUpdate.id, itemUpdate).subscribe({
         next: response => {
-          this.snackBar.open("Produto atualizado com sucesso!", false);
+          this.snackBar.open("Product updated successfully!", false);
         },
         error: err => {
-          this.snackBar.open("Erro ao atualizar a compra", true);
+          this.snackBar.open("Error updating purchase", true);
         }
       });
     }
