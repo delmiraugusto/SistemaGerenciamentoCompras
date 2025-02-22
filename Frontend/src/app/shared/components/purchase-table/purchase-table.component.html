@@ -22,13 +22,6 @@
         <td mat-cell *matCellDef="let purchase"> {{purchase.userName}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="productID">
-        <th mat-header-cell *matHeaderCellDef> Purchased Items </th>
-        <td mat-cell *matCellDef="let purchase">
-            <span class="details-link" (click)="openPurchaseDetails(purchase)">Detalhes</span>
-        </td>
-    </ng-container>
-
     <ng-container matColumnDef="orderDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Date </th>
         <td mat-cell *matCellDef="let purchase"> {{purchase.orderDate | date}} </td>
@@ -40,13 +33,11 @@
     </ng-container>
 
     <ng-container matColumnDef="Edit">
-        <th mat-header-cell *matHeaderCellDef><mat-icon>edit</mat-icon></th>
-        <td mat-cell *matCellDef="let purchase"><mat-icon (click)="edit(purchase)">edit</mat-icon></td>
-    </ng-container>
-
-    <ng-container matColumnDef="Delete">
-        <th mat-header-cell *matHeaderCellDef><mat-icon>delete</mat-icon></th>
-        <td mat-cell *matCellDef="let purchase"><mat-icon (click)="remove(purchase.id)">delete</mat-icon></td>
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let purchase">
+            <span (click)="edit(purchase)" style="margin-right: 0.2rem;"><mat-icon>edit</mat-icon></span>
+            <span class="details-link" (click)="openPurchaseDetails(purchase)"><mat-icon>search</mat-icon></span>
+        </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

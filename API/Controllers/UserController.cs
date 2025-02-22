@@ -40,6 +40,10 @@ namespace API.Controllers
                 dynamic i = _service.Delete(id);
                 return i == 0 ? Problem($"Object {id} not updated, {i} rows affected") : NoContent();
             }
+            catch (InvalidOperationException ex) 
+            {
+                return Conflict(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);

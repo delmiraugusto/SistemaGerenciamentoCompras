@@ -15,7 +15,7 @@ import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.componen
 })
 export class PurchaseComponent implements OnInit {
     title: string = "";
-    purchase: PurchaseInsert = new PurchaseInsert();
+    purchase: any = new PurchaseInsert();
     users: User[] = [];
     products: Product[] = [];
 
@@ -28,6 +28,9 @@ export class PurchaseComponent implements OnInit {
     ) {
         this.title = this.data.title;
         this.purchase = this.data.object ?? new PurchaseInsert();
+        this.purchase.items = "items" in this.purchase ? this.purchase.items : this.purchase.products;
+
+        console.log(this.data.object);
     }
 
     ngOnInit(): void {
@@ -66,5 +69,6 @@ export class PurchaseComponent implements OnInit {
                 }
             });
         }
+
     }
 }

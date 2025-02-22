@@ -17,6 +17,8 @@ export class UserComponent implements OnInit {
         { id: 2, name: 'Client' },
     ];
 
+    hide = true;
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private userService: UserService,
@@ -24,7 +26,11 @@ export class UserComponent implements OnInit {
     ) {
         this.title = this.data.title;
         this.user = this.data.object ?? new User();
+
+        this.user.password = '';
     }
+
+
 
     ngOnInit(): void { }
 
@@ -48,6 +54,7 @@ export class UserComponent implements OnInit {
             const userUpdate: UserUpdate = new UserUpdate();
             userUpdate.email = this.user.email;
             userUpdate.name = this.user.name;
+            userUpdate.password = this.user.password;
             userUpdate.roleID = this.user.roleID;
 
             console.log('Dados para atualização:', userUpdate);
@@ -57,7 +64,6 @@ export class UserComponent implements OnInit {
                     this.snackBar.open("Usuário atualizado com sucesso!", false);
                 },
                 error: (err) => {
-                    console.error('Erro ao atualizar o usuário:', err);
                     this.snackBar.open("Erro ao atualizar o usuário", true);
                 }
             });

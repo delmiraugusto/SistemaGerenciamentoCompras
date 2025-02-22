@@ -21,7 +21,7 @@
         <mat-form-field style="flex: 2;">
           <mat-label>Product</mat-label>
           <mat-select [(ngModel)]="item.productID">
-            <mat-option *ngFor="let product of products" [value]="product.id">
+            <mat-option *ngFor=" let product of products" [value]="product.id">
               {{ product.name }}
             </mat-option>
           </mat-select>
@@ -33,7 +33,7 @@
         </mat-form-field>
 
         <button mat-icon-button color="warn" (click)="removeItem(i)">
-          <mat-icon>delete</mat-icon>
+          <mat-icon style="color: #ff0000;">delete</mat-icon>
         </button>
       </div>
     </div>

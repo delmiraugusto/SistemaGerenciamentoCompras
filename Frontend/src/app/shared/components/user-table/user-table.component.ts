@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { UserComponent } from '../../dialogs/user/user-component';
 import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.component';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-table',
@@ -14,8 +15,8 @@ import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.componen
   styleUrls: ['./user-table.component.css'],
 })
 export class UserTableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'email', 'name', 'roleID', 'Edit', 'Delete'];
-  userList: MatTableDataSource<User> = new MatTableDataSource<User>(); // Use a classe User
+  displayedColumns: string[] = ['id', 'name', 'email', 'roleID', 'Edit', 'Delete'];
+  userList: MatTableDataSource<User> = new MatTableDataSource<User>();
   pageSizes: number[] = [25, 50, 100];
   length: number = 0;
 
@@ -61,11 +62,14 @@ export class UserTableComponent implements OnInit {
   remove = (id: number) => {
     this.userService.RemoveById(id).subscribe({
       next: () => {
-        this.snackBar.open("Usuário removido com sucesso!", false);
+        this.snackBar.open("User remove with sucess!", false);
         this.refresh();
       },
       error: (err) => {
-        this.snackBar.open("Erro ao remover o usuário", true);
+        if (err.status == HttpStatusCode.Conflict) {
+          return this.snackBar.open("It was not possible to remove the user because there are registered purchases", true)
+        }
+        return this.snackBar.open("Error to remove user", true);
       }
     });
   };

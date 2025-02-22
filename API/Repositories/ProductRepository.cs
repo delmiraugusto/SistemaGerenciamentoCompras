@@ -9,7 +9,7 @@ public class ProductRepository : IRepository<ProductInsert, ProductUpdate>
     public string TABLE => "Product";
     public dynamic SetAttributes(SqliteDataReader reader) => new Product()
     {
-        id = long.Parse(reader["id"].ToString()!),
+        productID = long.Parse(reader["id"].ToString()!),
         name = reader["name"].ToString()!,
         price = decimal.Parse(reader["price"].ToString()!),
     };

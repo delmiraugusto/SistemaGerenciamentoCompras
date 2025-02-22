@@ -61,8 +61,6 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
         return (int)purchaseID;
     }
 
-
-
     public List<dynamic> SelectAll()
     {
         using DB db = new();
@@ -112,7 +110,7 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
             {
                 var product = new Product()
                 {
-                    id = int.Parse(reader["productID"].ToString()!),
+                    productID = int.Parse(reader["productID"].ToString()!),
                     name = productName,
                     price = decimal.Parse(reader["price"].ToString()!),
                     quantity = int.Parse(reader["quantity"].ToString()!)
@@ -182,7 +180,7 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
             {
                 var product = new Product()
                 {
-                    id = int.Parse(reader["productID"].ToString()!), 
+                    productID = int.Parse(reader["productID"].ToString()!), 
                     name = productName,
                     price = decimal.Parse(reader["price"].ToString()!),
                     quantity = int.Parse(reader["quantity"].ToString()!)
@@ -225,9 +223,9 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
             prod.price AS productPrice,
             pi.quantity
         FROM {TABLE} p
-        JOIN User u ON u.id = p.userID
-        JOIN PurchaseItem pi ON pi.purchaseID = p.id
-        JOIN Product prod ON prod.id = pi.productID 
+            JOIN User u ON u.id = p.userID
+            JOIN PurchaseItem pi ON pi.purchaseID = p.id
+            JOIN Product prod ON prod.id = pi.productID 
         WHERE p.userID = @userID");
 
         db.Parameter("@userID", userID);
@@ -256,7 +254,7 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
 
             var product = new Product()
             {
-                id = int.Parse(reader["productID"].ToString()!),
+                productID = int.Parse(reader["productID"].ToString()!),
                 name = reader["productName"].ToString()!,
                 price = decimal.Parse(reader["productPrice"].ToString()!),
                 quantity = int.Parse(reader["quantity"].ToString()!) 
@@ -278,7 +276,7 @@ public class PurchaseRepository : IRepository<PurchaseInsert, PurchaseUpdate>
             foreach (var product in purchase.products)
             {
                 dynamic productResult = new ExpandoObject();
-                productResult.id = product.id;
+                productResult.id = product.productID;
                 productResult.name = product.name;
                 productResult.price = product.price;
                 productResult.quantity = product.quantity;

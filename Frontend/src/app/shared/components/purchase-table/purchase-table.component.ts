@@ -15,7 +15,7 @@ import { PurchaseDetailsComponent } from '../purchase-details/purchase-details.c
   styleUrls: ['./purchase-table.component.css'],
 })
 export class PurchaseTableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'UserName', 'productID', 'orderDate', 'total', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['id', 'UserName', 'orderDate', 'total', 'Edit'];
   purchaseList: MatTableDataSource<Purchase> = new MatTableDataSource<Purchase>();
   pageSizes: number[] = [25, 50, 100];
   length: number = 0;
@@ -75,7 +75,7 @@ export class PurchaseTableComponent implements OnInit {
   openPurchaseDetails(purchase: Purchase) {
     this.dialog.open(PurchaseDetailsComponent, {
       width: '500px',
-      data: { products: purchase.products }
+      data: { products: purchase.products, purchaseID: purchase.id }
     });
   }
 

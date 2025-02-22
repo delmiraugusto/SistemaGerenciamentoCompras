@@ -9,6 +9,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class PurchaseDetailsComponent {
     constructor(
         public dialogRef: MatDialogRef<PurchaseDetailsComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { products: { name: string, quantity: number }[] }
+        @Inject(MAT_DIALOG_DATA) public data: { products: { name: string, quantity: number, UnitValue: number, total: number }[], purchaseID: number }
     ) { }
 }

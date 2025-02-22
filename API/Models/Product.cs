@@ -2,7 +2,7 @@
 {
     public class Product
     {
-        public long id { get; set; } = -1;
+        public long productID { get; set; } = -1;
         public string name { get; set; } = "";
         public decimal price { get; set; } = -1;
         public int quantity { get; set; } = 0;

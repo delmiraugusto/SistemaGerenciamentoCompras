@@ -11,7 +11,7 @@ namespace API.Repositories
         public dynamic SetAttributes(SqliteDataReader reader) => new User()
         {
             id = long.Parse(reader["id"].ToString()!),
-            user = reader["email"].ToString()!,
+            email = reader["email"].ToString()!,
             name = reader["name"].ToString()!,
             password = reader["password"].ToString()!,
             roleID = int.Parse(reader["roleID"].ToString()!)

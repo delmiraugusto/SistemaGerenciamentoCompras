@@ -36,6 +36,7 @@ import { PurchaseDetailsComponent } from './shared/components/purchase-details/p
 import { UserComponent } from './shared/dialogs/user/user-component';
 import { UserTableComponent } from './shared/components/user-table/user-table.component';
 import { UserPage } from './shared/pages/user-page/user-page';
+import { RolePipe } from './pipes/role.pipe';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { UserPage } from './shared/pages/user-page/user-page';
     PurchaseDetailsComponent,
     UserComponent,
     UserTableComponent,
-    UserPage
+    UserPage,
+    RolePipe
   ],
   imports: [
     BrowserModule,
