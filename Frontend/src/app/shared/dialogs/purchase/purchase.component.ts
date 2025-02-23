@@ -28,13 +28,41 @@ export class PurchaseComponent implements OnInit {
     ) {
         this.title = this.data.title;
         this.purchase = this.data.object ?? new PurchaseInsert();
-        this.purchase.items = "items" in this.purchase ? this.purchase.items : this.purchase.products;
 
-        console.log(this.data.object);
+        this.purchase.userId = this.data.object?.userId ?? this.getUserIdFromToken();
+
+        this.purchase.items = this.data.object?.items ?? this.data.object?.products ?? [];
+    }
+
+    getUserIdFromToken(): number | null {
+        const token = sessionStorage.getItem('token');
+
+        if (!token) {
+            console.warn('Nenhum token encontrado no sessionStorage');
+            return null;
+        }
+
+        try {
+            const payloadBase64 = token.split('.')[1];
+            if (!payloadBase64) {
+                console.error('Formato de token inválido');
+                return null;
+            }
+
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            return decodedPayload.nameid || decodedPayload.sub ? Number(decodedPayload.nameid || decodedPayload.sub) : null;
+        } catch (error) {
+            console.error('Erro ao decodificar token:', error);
+            return null;
+        }
     }
 
     ngOnInit(): void {
-        this.loadUsers();
+        if (this.purchase.userId) {
+            this.users = [];
+        } else {
+            this.loadUsers();
+        }
         this.loadProducts();
     }
 
@@ -51,8 +79,18 @@ export class PurchaseComponent implements OnInit {
     }
 
     addItem() {
-        this.purchase.items.push({ productID: -1, quantity: 1 });
+        if (!this.purchase.items) {
+            this.purchase.items = [];
+        }
+
+        this.purchase.items.push({ productID: -1, quantity: 1, price: -1 });
     }
+
+    updateItemPrice(index: number) {
+        const selectedProduct = this.products.find(product => product.id === this.purchase.items[index].productID);
+        this.purchase.items[index].price = selectedProduct ? selectedProduct.price : 0;
+    }
+
 
     removeItem(index: number) {
         this.purchase.items.splice(index, 1);

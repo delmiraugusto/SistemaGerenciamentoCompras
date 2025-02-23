@@ -37,6 +37,10 @@ import { UserComponent } from './shared/dialogs/user/user-component';
 import { UserTableComponent } from './shared/components/user-table/user-table.component';
 import { UserPage } from './shared/pages/user-page/user-page';
 import { RolePipe } from './pipes/role.pipe';
+import { PurchasePagebyUser } from './shared/pages/purchase-byUser-table/purchase-PagebyUser';
+import { PurchaseTableByUserComponent } from './shared/components/purchase-byUser-table/purchase-byUser-table';
+
+
 
 @NgModule({
   declarations: [
@@ -44,6 +48,7 @@ import { RolePipe } from './pipes/role.pipe';
     HeaderComponent,
     LoginPage,
     PurchasePage,
+    PurchasePagebyUser,
     ButtonPage,
     MainTableComponent,
     FooPage,
@@ -56,7 +61,8 @@ import { RolePipe } from './pipes/role.pipe';
     UserComponent,
     UserTableComponent,
     UserPage,
-    RolePipe
+    RolePipe,
+    PurchaseTableByUserComponent
   ],
   imports: [
     BrowserModule,

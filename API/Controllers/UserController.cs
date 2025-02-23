@@ -115,12 +115,12 @@ namespace API.Controllers
                     return Unauthorized("Invalid email or password.");
                 }
 
-                var token = _tokenService.CreateToken(user.id, user.user, user.roleID);
+                var token = _tokenService.CreateToken(user.id, user.email, user.roleID);
 
                 UserLoginResponse response = new()
                 {
                     roleID = user.roleID,
-                    name = user.user,
+                    name = user.email,
                     token = token
                 };
 

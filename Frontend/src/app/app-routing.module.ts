@@ -7,14 +7,16 @@ import { BarPage } from './shared/pages/bar-page/bar-page';
 import { AuthGuard } from './core/guard/auth-guard';
 import { PurchasePage } from './shared/pages/purchase-page/purchase-page';
 import { UserPage } from './shared/pages/user-page/user-page';
+import { PurchasePagebyUser } from './shared/pages/purchase-byUser-table/purchase-PagebyUser';
 
 const routes: Routes = [
   { path: '', component: LoginPage },
   { path: 'listProduct', component: ButtonPage, canActivate: [AuthGuard], data: { roleID: ['1'] } },
-  { path: 'listPurchase', component: PurchasePage, canActivate: [AuthGuard], data: { roleID: ['1', '2'] } },
-  { path: 'listUser', component: UserPage, canActivate: [AuthGuard], data: { roleID: ['1', '2'] } },
+  { path: 'listPurchase', component: PurchasePage, canActivate: [AuthGuard], data: { roleID: ['1'] } },
+  { path: 'listUser', component: UserPage, canActivate: [AuthGuard], data: { roleID: ['1'] } },
+  { path: 'listPurchaseByUser', component: PurchasePagebyUser, canActivate: [AuthGuard], data: { roleID: ['1', '2'] } },
   { path: 'dropdownbutton/foo', component: FooPage, canActivate: [AuthGuard], data: { roleID: ['1', '2'] } },
-  { path: 'dropdownbutton/bar', component: BarPage, canActivate: [AuthGuard], data: { roles: ['user'] } },
+  { path: 'dropdownbutton/bar', component: BarPage, canActivate: [AuthGuard], data: { roles: ['1', '2'] } },
   //{ path: 'homeAdmin', component: HomeAdminPage, canActivate: [AuthGuard], data: { roles: ['1'] } }, // Admin (role 1)
   //{ path: 'homeCliente', component: HomeClientePage, canActivate: [AuthGuard], data: { roles: ['2'] } }, // Cliente (role 2)
 ];

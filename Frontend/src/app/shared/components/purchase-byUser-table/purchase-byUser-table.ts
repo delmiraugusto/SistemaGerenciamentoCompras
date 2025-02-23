@@ -10,12 +10,12 @@ import { SnackBar } from 'src/app/shared/components/snack-bar/snack-bar.componen
 import { PurchaseDetailsComponent } from '../purchase-details/purchase-details.component';
 
 @Component({
-  selector: 'app-purchase-table',
-  templateUrl: './purchase-table.component.html',
-  styleUrls: ['./purchase-table.component.css'],
+  selector: 'app-purchaseByUser-table',
+  templateUrl: './purchase-byUser-table.html',
+  styleUrls: ['./purchase-byUser-table.css'],
 })
-export class PurchaseTableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'UserName', 'orderDate', 'total', 'details'];
+export class PurchaseTableByUserComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'orderDate', 'total', 'details'];
   purchaseList: MatTableDataSource<Purchase> = new MatTableDataSource<Purchase>();
   pageSizes: number[] = [25, 50, 100];
   length: number = 0;
@@ -39,7 +39,14 @@ export class PurchaseTableComponent implements OnInit {
   }
 
   refresh() {
-    this.purchaseService.GetList().subscribe({
+    const userId = Number(this.getUserIdFromToken());
+
+    if (!userId) {
+      console.error('User ID not found in token');
+      return;
+    }
+
+    this.purchaseService.GetByUserId(userId).subscribe({
       next: data => {
         this.purchaseList = new MatTableDataSource(data);
         this.purchaseList.paginator = this.paginator;
@@ -50,12 +57,49 @@ export class PurchaseTableComponent implements OnInit {
         }
       },
       error: error => {
-        console.log(error);
+        console.error(error);
       }
     });
   }
 
-  insert = () => this.openDialog('Insert Purchase');
+  getUserIdFromToken(): number | null {
+    const token = sessionStorage.getItem('token');
+
+    if (!token) {
+      console.warn('No tokens found in sessionStorage');
+      return null;
+    }
+
+    try {
+      const payloadBase64 = token.split('.')[1];
+
+      if (!payloadBase64) {
+        console.error('Invalid token format');
+        return null;
+      }
+
+      const decodedPayload = JSON.parse(atob(payloadBase64));
+
+      const userId = decodedPayload.nameid || decodedPayload.sub;
+
+      return userId ? Number(userId) : null;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+
+  insert = () => {
+    const userId = this.getUserIdFromToken();
+
+    if (!userId) {
+      console.error("User ID not found in token");
+      return;
+    }
+
+    this.openDialog('Insert Purchase', { userID: userId });
+  };
+
 
   edit = (obj: Purchase) => this.openDialog('Edit Purchase', obj);
 
@@ -63,10 +107,9 @@ export class PurchaseTableComponent implements OnInit {
     this.purchaseService.RemoveById(id).subscribe({
       next: () => {
         this.snackBar.open("Produto removido com sucesso!", false);
-
         this.refresh();
       },
-      error: (err) => {
+      error: () => {
         this.snackBar.open("Erro ao remover o produto", true);
       }
     });
@@ -79,14 +122,14 @@ export class PurchaseTableComponent implements OnInit {
     });
   }
 
-
-  openDialog(title: string, object?: Purchase) {
+  openDialog(title: string, object?: Partial<Purchase>) {
     this.dialog.open(PurchaseComponent, {
       disableClose: true,
       data: {
         title: title,
-        object: object
+        object: object || {}
       }
     });
   }
+
 }
