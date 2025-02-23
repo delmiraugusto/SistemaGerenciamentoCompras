@@ -78,6 +78,22 @@ export class PurchaseComponent implements OnInit {
         });
     }
 
+    getTotal(item: any): number {
+        return item.price * item.quantity;
+    }
+
+    getTotalPurchase(): number {
+        if (!this.purchase.items || this.purchase.items.length === 0) {
+            return 0;
+        }
+
+        return this.purchase.items.reduce((total: number, item: any) => total + (item.price * item.quantity), 0);
+    }
+
+
+
+
+
     addItem() {
         if (!this.purchase.items) {
             this.purchase.items = [];
@@ -100,10 +116,10 @@ export class PurchaseComponent implements OnInit {
         if (this.title.toLowerCase().includes("insert")) {
             this.purchaseService.Insert(this.purchase).subscribe({
                 next: () => {
-                    this.snackBar.open("Compra inserida com sucesso!", false);
+                    this.snackBar.open("Purchase insert sucessfully!", false);
                 },
                 error: () => {
-                    this.snackBar.open("Erro ao inserir a compra", true);
+                    this.snackBar.open("Error when entering purchase", true);
                 }
             });
         }

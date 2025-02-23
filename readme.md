@@ -15,7 +15,56 @@ This software follows Basic Crud structure, designed to maintain consistency wit
 ### Database
 - **`CodeChallenge.sqlite`** - A small database created for this challenge.
 - **`create.sql`** - Script for creating the complete database structure required for the application.
-- **`insert.sql`** - Script for insert some random lines in the database.
+- **`insert&Update.sql`** - Script for insert and update some random lines in the database.
+
+## Database Modeling
+
+```mermaid 
+classDiagram
+    class User {
+        <<Entity>>
+        - ID: PK Integer
+        - EMAIL: Text
+        - PASSWORD: Text
+        - NAME: Text
+        - ROLEID: Integer
+    }
+
+    class Role {
+        <<Enum>>
+        - ID: PK Integer
+        - EMAIL: Text
+    }
+
+    class Product {
+        <<Entity>>
+        - ID: PK Integer
+        - NAME: Text
+        - PRICE: Decimal
+    }
+
+    class Purchase {
+        <<Entity>>
+        - ID: PK Integer
+        - USERID: Integer
+        - ORDERDATE: DateTime
+        - TOTAL: Decimal
+    }
+
+    class PurchaseItem {
+        <<Entity>>
+        - ID: PK Integer
+        - PURCHASEID: Integer
+	     - PRODUCTID: Integer	
+        - QUANTITY: Integer
+    }
+
+  Role --o User
+  User --|> Purchase
+  Purchase --|> PurchaseItem
+  PurchaseItem  --|> Product
+
+```
 
 ### Frontend
 1. **`/src/app/components`** - Holds all individual components.

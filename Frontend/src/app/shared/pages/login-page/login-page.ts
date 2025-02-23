@@ -49,9 +49,9 @@ export class LoginPage {
             const roleID = decodedToken?.roleID;
 
             if (roleID === '1') {
-              this.router.navigate(['/listProduct']);
+              this.router.navigate(['/menuAdmin']);
             } else if (roleID === '2') {
-              this.router.navigate(['/homeCliente']);
+              this.router.navigate(['/listPurchaseByUser']);
             }
           } else {
             this.router.navigate(['']);

@@ -8,6 +8,7 @@ import { AuthGuard } from './core/guard/auth-guard';
 import { PurchasePage } from './shared/pages/purchase-page/purchase-page';
 import { UserPage } from './shared/pages/user-page/user-page';
 import { PurchasePagebyUser } from './shared/pages/purchase-byUser-table/purchase-PagebyUser';
+import { MenuPage } from './shared/pages/menu-page/menu-page';
 
 const routes: Routes = [
   { path: '', component: LoginPage },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'listPurchase', component: PurchasePage, canActivate: [AuthGuard], data: { roleID: ['1'] } },
   { path: 'listUser', component: UserPage, canActivate: [AuthGuard], data: { roleID: ['1'] } },
   { path: 'listPurchaseByUser', component: PurchasePagebyUser, canActivate: [AuthGuard], data: { roleID: ['1', '2'] } },
+  { path: 'menuAdmin', component: MenuPage, canActivate: [AuthGuard], data: { roleID: ['1'] } },
   { path: 'dropdownbutton/foo', component: FooPage, canActivate: [AuthGuard], data: { roleID: ['1', '2'] } },
   { path: 'dropdownbutton/bar', component: BarPage, canActivate: [AuthGuard], data: { roles: ['1', '2'] } },
   //{ path: 'homeAdmin', component: HomeAdminPage, canActivate: [AuthGuard], data: { roles: ['1'] } }, // Admin (role 1)

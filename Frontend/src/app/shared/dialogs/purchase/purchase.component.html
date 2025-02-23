@@ -27,7 +27,6 @@
           </mat-select>
         </mat-form-field>
 
-
         <mat-form-field style="flex: 1;">
           <mat-label>Quantity</mat-label>
           <input matInput type="number" min="1" [(ngModel)]="item.quantity">
@@ -38,11 +37,20 @@
           <input matInput type="number" disabled min="1" [(ngModel)]="item.price">
         </mat-form-field>
 
+        <mat-form-field style="flex: 1;">
+          <mat-label>Subtotal</mat-label>
+          <input matInput type="number" disabled min="1" [ngModel]="getTotal(item)">
+        </mat-form-field>
+
         <button mat-icon-button color="warn" (click)="removeItem(i)">
           <mat-icon style="color: #ff0000;">delete</mat-icon>
         </button>
       </div>
     </div>
+    <mat-form-field style="display: flex; width: 18rem; ">
+      <mat-label>Total</mat-label>
+      <input matInput type="number" disabled [ngModel]="getTotalPurchase()">
+    </mat-form-field>
 
     <button mat-button color="primary" (click)="addItem()" style="margin-top: 10px;">
       <mat-icon>add</mat-icon> Add Product

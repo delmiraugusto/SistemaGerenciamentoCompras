@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/UserService';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,7 @@ import { UserService } from 'src/app/core/services/UserService';
 export class HeaderComponent implements OnInit {
   user: string | null = "";
   accessLevel: string | null = "";
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     this.user = this.userService.getCurrentUser();
@@ -21,6 +23,12 @@ export class HeaderComponent implements OnInit {
     this.userService.Logout();
     this.router.navigate(['']);
   }
+
+
+  goBack() {
+    this.location.back();
+  }
+
 
   AdminButton = () => this.router.navigate(['/adminbutton']);
   Button = () => this.router.navigate(['/button']);

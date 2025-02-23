@@ -39,6 +39,7 @@ import { UserPage } from './shared/pages/user-page/user-page';
 import { RolePipe } from './pipes/role.pipe';
 import { PurchasePagebyUser } from './shared/pages/purchase-byUser-table/purchase-PagebyUser';
 import { PurchaseTableByUserComponent } from './shared/components/purchase-byUser-table/purchase-byUser-table';
+import { MenuPage } from './shared/pages/menu-page/menu-page';
 
 
 
@@ -62,7 +63,8 @@ import { PurchaseTableByUserComponent } from './shared/components/purchase-byUse
     UserTableComponent,
     UserPage,
     RolePipe,
-    PurchaseTableByUserComponent
+    PurchaseTableByUserComponent,
+    MenuPage
   ],
   imports: [
     BrowserModule,

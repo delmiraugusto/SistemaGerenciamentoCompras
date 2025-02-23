@@ -1,0 +1,21 @@
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.4rem;
+    margin-top: 13rem;
+}
+
+button {
+    color: white;
+    font-size: 2em;
+    padding: 20px;
+    width: 20rem;
+    border-radius: 0.5rem;
+    background: #1c377b;
+    cursor: pointer;
+}
+
+button:hover {
+    text-decoration: underline;
+}

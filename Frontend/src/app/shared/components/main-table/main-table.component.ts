@@ -61,12 +61,12 @@ export class MainTableComponent implements OnInit {
   remove = (id: number) => {
     this.productService.RemoveById(id).subscribe({
       next: () => {
-        this.snackBar.open("Produto removido com sucesso!", false);
+        this.snackBar.open("Product removed successfully!", false);
 
         this.refresh();
       },
       error: (err) => {
-        this.snackBar.open("Erro ao remover o produto", true);
+        this.snackBar.open("Error removing product", true);
       }
     });
   };
