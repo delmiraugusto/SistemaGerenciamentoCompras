@@ -72,6 +72,13 @@ classDiagram
 3. **`/src/app/dialogs`** - Collection of all dialog components.
 4. **`/src/app/shared`** - Contains all shared pages. 
 
+# Screens Example
+ <img src="./img/menu.png" alt="Menu Screen">
+ <img src="./img/your_pruchase.png" alt="Your Purchase Screen">
+ <img src="./img/Insert.png" alt="Insert Screen">
+
+
+
 # How to deploy this project
 
 ## On Local Machine:
