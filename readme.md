@@ -95,7 +95,7 @@ classDiagram
 - Clone this repository
 - Open cmd and execute this code changing the CHANGE-ME to the software Git URL:
 ```
-git clone CHANGE-ME
+https://github.com/delmiraugusto/SistemaGerenciamentoCompras.git
 ```
 ### Building:
 
