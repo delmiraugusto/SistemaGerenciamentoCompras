@@ -73,9 +73,9 @@ classDiagram
 4. **`/src/app/shared`** - Contains all shared pages. 
 
 # Screens Example
- <img src="./img/menu.png" alt="Menu Screen">
- <img src="./img/your_pruchase.png" alt="Your Purchase Screen">
- <img src="./img/Insert.png" alt="Insert Screen">
+ <img src="./img/Home.png" alt="Menu Screen">
+ <img src="./img/MakingPurchase.png" alt="Your Purchase Screen">
+ <img src="./img/PurchaseDetails.png" alt="Details Screen">
 
 
 
