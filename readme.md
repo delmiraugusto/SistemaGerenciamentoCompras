@@ -73,8 +73,11 @@ classDiagram
 4. **`/src/app/shared`** - Contains all shared pages. 
 
 # Screens Example
- <img src="./img/Home.png" alt="Menu Screen">
+ <img src="./img/MenuAdmin.png" alt="Menu Screen">
+  <img src="./img/Swagger.png" alt="Swagger Screen">
  <img src="./img/MakingPurchase.png" alt="Your Purchase Screen">
+ <img src="./img/Postman.png" alt="Postaman Screen">
+   <img src="./img/PowerBiMaisVendidos.pngg" alt="PowerBI Screen">
  <img src="./img/PurchaseDetails.png" alt="Details Screen">
 
 
