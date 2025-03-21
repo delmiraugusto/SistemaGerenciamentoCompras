@@ -1,4 +1,4 @@
-# The Alfa Laval Code Challenge Base
+# Challenge Base
 
 ## Basic CRUD
 This software follows Basic Crud structure, designed to maintain consistency with similar applications but with their owns particularities.
